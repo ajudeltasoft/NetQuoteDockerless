@@ -1,0 +1,2 @@
+# NetQuoteDockerless
+Without docker
