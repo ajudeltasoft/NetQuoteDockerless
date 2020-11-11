@@ -12,7 +12,9 @@ class AddressController extends Controller
     {
         
         $address = Address::latest()->get();       
-        return response()->json($address);
+       // return response()->json($address);
+       echo'hai';
+       die;
        
     }
 }

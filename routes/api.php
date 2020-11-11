@@ -36,4 +36,9 @@ Route::group([
 });
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\OrderController;
+
 Route::post('address', [AddressController::class, 'getAllRecords']);
+Route::post('save_order', [OrderController::class, 'store']);
+Route::post('list_order', [OrderController::class, 'getAllOrders']);
+Route::post('order_detail', [OrderController::class, 'orderDetail']);
