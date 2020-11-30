@@ -18,4 +18,7 @@ Route::get('/', function () {
 });
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\TestController;
 Route::get('address', [AddressController::class, 'getAllRecords']);
+Route::get('genxml', [TestController::class, 'generateXML']);
+Route::get('genxml2', [TestController::class, 'generateXML2']);
