@@ -38,6 +38,7 @@ Route::group([
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\ProductController;
 
 Route::post('address', [AddressController::class, 'getAllRecords']);
 Route::post('save_order', [OrderController::class, 'store']);
@@ -48,3 +49,4 @@ Route::post('contacts', [TestController::class, 'getAllContacts']);
 Route::post('contacts2', [TestController::class, 'getAllContacts2']);
 
 Route::get('genxml', [TestController::class, 'generateXML']);
+Route::post('getProduct', [ProductController::class, 'getProduct']);
