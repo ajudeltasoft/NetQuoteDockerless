@@ -37,8 +37,14 @@ Route::group([
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\TestController;
 
 Route::post('address', [AddressController::class, 'getAllRecords']);
 Route::post('save_order', [OrderController::class, 'store']);
 Route::post('list_order', [OrderController::class, 'getAllOrders']);
 Route::post('order_detail', [OrderController::class, 'orderDetail']);
+
+Route::post('contacts', [TestController::class, 'getAllContacts']);
+Route::post('contacts2', [TestController::class, 'getAllContacts2']);
+
+Route::get('genxml', [TestController::class, 'generateXML']);
