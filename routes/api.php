@@ -50,3 +50,4 @@ Route::post('contacts2', [TestController::class, 'getAllContacts2']);
 
 Route::get('genxml', [TestController::class, 'generateXML']);
 Route::post('getProduct', [ProductController::class, 'getProduct']);
+Route::post('getProductDetail', [ProductController::class, 'getProductDetail']);
