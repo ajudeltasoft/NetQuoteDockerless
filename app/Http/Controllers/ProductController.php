@@ -59,7 +59,8 @@ class ProductController extends Controller
             $productInfo['mxwidth']=$r->mxwidth;
             $productInfo['mxheight']=$r->mxheight;
             $productInfo['mxdepth']=$r->mxdepth;
-            $productInfo['image']=$storagePath.'/images/catalog/'.$r->ImageName.'.png';
+         //   $productInfo['image']=$storagePath.'/images/catalog/'.$r->ImageName.'.png';
+            $productInfo['image']=asset('images/catalog/'.$r->ImageName.'.png');
 
         }
 
