@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Customer;
+use DB;
 class OrderController extends Controller
 {
     //
@@ -62,4 +64,43 @@ class OrderController extends Controller
         $order = Order::find($id);
         return response()->json($order);
     }
+
+    public function getAllCompanies(){
+        
+        $contacts = Customer::all(); 
+        return response()->json($contacts);        
+     }
+
+     public function getCompanyInfo(Request $request){
+        
+        $data=array();
+        $companyId =request("companyId"); 
+        
+        /**Get company address */
+        $address = DB::table('shipto as s')        
+        ->join('customers as c', 'c.idcust', '=', 's.idcust')
+        ->Select('s.id','c.namecust', 's.idcust', 's.namelocn', 's.textstre1', 's.namecity',
+        's.ref_stateid', 's.codestte', 's.codectry', 's.codepstl', 's.textphon1',
+         's.ref_shipvia', 's.shipvia')->where('c.id','=',$companyId)->get();
+
+        $data['addressInfo'] = $address;
+
+        /**Get Designers */
+        $carriers = DB::table('lucarriers as cr')     
+        ->Select('cr.id','cr.carriername', 'cr.city', 'cr.state', 'cr.country')->get();
+        $data['carrierInfo'] = $carriers;
+
+        /**Get Payment Terms */
+        $paymentTerms = DB::table('lupayterms as pt')     
+        ->Select('pt.*')->get();
+        $data['paymentTerms'] = $paymentTerms;
+
+         /**Get Payment Terms */
+         $catalogues = DB::table('catalogues as cl')     
+         ->Select('cl.*')->get();
+         $data['catalogues'] = $catalogues;
+       
+        return response()->json($data);        
+     }
+
 }
