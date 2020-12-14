@@ -103,4 +103,54 @@ class OrderController extends Controller
         return response()->json($data);        
      }
 
+     public function getModOverrideInfo(Request $request){
+        $data=array();
+        $modInfo=array();
+        $temp=array();
+        $modId =request("modId"); 
+        $modoverride = DB::table('modoverrides as mo')     
+         ->Select('mo.*')->where('mo.modid','=',$modId)->get();
+
+        if(count($modoverride)){
+            $data['status']=true;
+            $data['message']='Success';
+            $c=1;
+            foreach($modoverride as $row){
+                $temp['label']=$row->uiname;
+                $temp['type']=$row->uitype;
+                if($row->uitype=='number'){
+                    $temp['input']=array();                    
+                }
+                else if ($row->uitype=='choice'){
+                    
+                    $KEYS   = explode(':', $row->uikey);
+                    $VALUES = explode(':', $row->uivalue);
+                    $select=array();
+
+                    for ($i = 0; $i < sizeof($KEYS); $i++){
+                        $select['key']=$KEYS[$i];
+                        $select['value']=$VALUES[$i];
+                        $temp['input'][$i]=$select;
+                        //unset($select);
+                    }
+                    // echo'---------------------------';
+                    // echo'<pre>';
+                    // print_r($temp['input']);
+                    // if($c==2)
+                    // die;
+                   
+                }
+                $modInfo[]=$temp;
+                $c++;
+            }
+            $data['result']=$modInfo;
+        }
+        else{
+            $data['status']=false;
+            $data['message']='No options available for this modification';
+            $data['result']=array();
+        }
+        return response()->json($data);  
+     }
+
 }

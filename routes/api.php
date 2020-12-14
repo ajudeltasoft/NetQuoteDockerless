@@ -53,3 +53,4 @@ Route::post('getProduct', [ProductController::class, 'getProduct']);
 Route::post('getProductDetail', [ProductController::class, 'getProductDetail']);
 Route::post('allCompanies', [OrderController::class, 'getAllCompanies']);
 Route::post('companyInfo', [OrderController::class, 'getCompanyInfo']);
+Route::post('getModOverrideInfo', [OrderController::class, 'getModOverrideInfo']);
