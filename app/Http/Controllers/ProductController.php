@@ -76,7 +76,10 @@ class ProductController extends Controller
        $productMod = DB::table('modifications as m')
        ->leftjoin('mtx_modprices as mp', 'm.id', '=', 'mp.modid')
        ->join('mtx_productmodifications as pm', 'pm.modid', '=', 'm.id')
-       ->Select('m.id','m.name','m.description','m.modification_amtpercent','mp.price')->where('pm.prodid','=',$productId)->get();
+       ->Select('m.id','m.name','m.description','m.modification_amtpercent','mp.price')
+       ->where('pm.prodid','=',$productId)
+       ->where('mp.prlevelid','=',260)
+       ->get();
 
        foreach($productMod as $r){
             $Mod['id']=$r->id;

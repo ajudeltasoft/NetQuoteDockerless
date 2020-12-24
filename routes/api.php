@@ -39,6 +39,11 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductOverrideController;
+//use App\Http\Controllers\ProductOverTest;
+use App\Http\Controllers\ModificationController;
+use App\Http\Controllers\DivisionController;
+use App\Http\Controllers\SectionController;
 
 Route::post('address', [AddressController::class, 'getAllRecords']);
 Route::post('save_order', [OrderController::class, 'store']);
@@ -54,3 +59,10 @@ Route::post('getProductDetail', [ProductController::class, 'getProductDetail']);
 Route::post('allCompanies', [OrderController::class, 'getAllCompanies']);
 Route::post('companyInfo', [OrderController::class, 'getCompanyInfo']);
 Route::post('getModOverrideInfo', [OrderController::class, 'getModOverrideInfo']);
+Route::post('checkOverride', [OrderController::class, 'checkOverride']);
+Route::post('addItem', [OrderController::class, 'addItem']);
+
+Route::post('getProductOverRide', [ProductOverrideController::class, 'getProductOverRide']);
+Route::post('getAllModifications', [ModificationController::class, 'getAllModifications']);
+Route::post('getAllDivisions', [DivisionController::class, 'getAllDivisions']);
+Route::post('getAllSections', [SectionController::class, 'getAllSections']);
