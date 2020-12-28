@@ -39,6 +39,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductOverrideController;
 
 Route::post('address', [AddressController::class, 'getAllRecords']);
 Route::post('save_order', [OrderController::class, 'store']);
@@ -54,3 +55,4 @@ Route::post('getProductDetail', [ProductController::class, 'getProductDetail']);
 Route::post('allCompanies', [OrderController::class, 'getAllCompanies']);
 Route::post('companyInfo', [OrderController::class, 'getCompanyInfo']);
 Route::post('getModOverrideInfo', [OrderController::class, 'getModOverrideInfo']);
+Route::post('getProductOverRide', [ProductOverrideController::class, 'getProductOverRide']);
