@@ -8,6 +8,7 @@ use App\Models\OrderItem;
 use App\Models\Customer;
 use App\Models\OrderModification;
 use App\Models\Modoverride;
+use App\Models\Ordersitemsoverride;
 use DB;
 use Config;
 class OrderController extends Controller
@@ -112,16 +113,20 @@ class OrderController extends Controller
         $modInfo=array();
         $temp=array();
         $modId =request("modId"); 
-        $modoverride = DB::table('modoverrides as mo')     
-         ->Select('mo.*')->where('mo.modid','=',$modId)->get();
+        $modoverride = DB::table('modoverrides as mo')
+        ->join('modifications as m', 'mo.modid', '=', 'm.id')     
+         ->Select('mo.*','m.name','m.description')->where('mo.modid','=',$modId)->get();
 
         if(count($modoverride)){
             $data['status']=true;
             $data['message']='Success';
+            $data['selected_mod_id']=$modId;
             $c=1;
             foreach($modoverride as $row){
                 $temp['label']=$row->uiname;
+                $temp['orId']=$row->id;
                 $temp['type']=$row->uitype;
+                $data['selected_mod_name']=$row->name.'-'.$row->description;
                 if($row->uitype=='number'){
                     $temp['input']=array();                    
                 }
@@ -135,16 +140,21 @@ class OrderController extends Controller
                         $select['key']=$KEYS[$i];
                         $select['value']=$VALUES[$i];
                         $temp['input'][$i]=$select;
-                        //unset($select);
+                        unset($select);
                     }
-                    // echo'---------------------------';
-                    // echo'<pre>';
-                    // print_r($temp['input']);
-                    // if($c==2)
-                    // die;
+                    
+                    // if($row->uiname=='No Charge'){
+                    //     echo'---------------------------';
+                    //     echo'<pre>';
+                    //     echo $row->uikey;
+                    //     print_r($temp['input']);
+                    //     die;
+                    // }
+                    
                    
                 }
                 $modInfo[]=$temp;
+                unset($temp);
                 $c++;
             }
             $data['result']=$modInfo;
@@ -227,10 +237,9 @@ class OrderController extends Controller
             $item->save();
             $order_item_id=$item->id;
             $data['id']=$order_item_id;
-            /** AddProductModifications*/
-            //Delete existing modification from
-            $deletedRows = OrderModification::where('order_item_id', $order_item_id)->delete();
-            //Insert into ordermodifications
+            /** Add Modifications Overrides -start*/
+            //Delete existing modification from OrderModifications
+            $deletedRows = OrderModification::where('order_item_id', $order_item_id)->delete();            
             $modOverrides = $request->post('modOverrides');
             $arrMO= json_decode($modOverrides);
             
@@ -270,7 +279,22 @@ class OrderController extends Controller
                 $mod->order_modification_overrides= $orId ;
                 $mod->order_modification_overrides_selected= $selOrId ;
                 $mod->save();
+            /** Add Modifications Overrides -end*/
 
+            /** Add Product Overrides -start*/
+             //Delete existing modification from OrderModifications
+             $deletedRows = Ordersitemsoverride::where('order_item_id', $order_item_id)->delete();            
+             $prodOverrides = $request->post('prodOverrides');
+             $arrPO= json_decode($prodOverrides);
+
+             foreach($arrPO as $row){
+
+             }
+
+
+            /** Add Product Overrides -end*/
+
+            
                
             }
          
