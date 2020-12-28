@@ -8,7 +8,7 @@ use DB;
 class ProductOverrideController extends Controller
 {
     //
-   public function getProductOverRide(Request $request)
+    public function getProductOverRide(Request $request)
     {
         $productId =request("productId");
         $result = DB::table('prodoverride')       
